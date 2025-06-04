@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size:
-    x: 15
-    y: 10
+    x: 2
+    y: 2
 --- !u!114 &427957034
 MonoBehaviour:
   m_ObjectHideFlags: 0
