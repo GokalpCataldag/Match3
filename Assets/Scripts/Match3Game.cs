@@ -4,7 +4,6 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-using static Unity.Mathematics.math;
 using System.Linq;
 
 public class Match3Game : MonoBehaviour
@@ -34,27 +33,25 @@ public class Match3Game : MonoBehaviour
             grid[c] = value;
         }
     }
-    List<Match> matches;
     public bool NeedsFilling
     { get; set; }
-    public List<int2> ClearedTileCoordinates
-    { get; private set; }
     public List<TileDrop> DroppedTiles
     { get; private set; }
 
-    public int2 Size => size;
+    public int2 Size 
+    {
+        get { return size; }
+    } 
     public void StartNewGame()
     {
         if (grid.IsUndefined)
         {
             grid = new(size);
-            matches = new();
-            ClearedTileCoordinates = new();
             DroppedTiles = new();
         }
         do
         {
-            FillGrid(); // mevcut grid’i rastgele doldur
+            FillGrid();
         }
         while (!HasAnyValidMove());
     }
@@ -65,14 +62,9 @@ public class Match3Game : MonoBehaviour
         {
             for (int x = 0; x < size.x; x++)
             {
-                // Random tile directly (2 dahil, 8 hariç) çünkü 1=None atlanýyor
                 grid[x, y] = (TileState)Random.Range(2, 8);
             }
         }
-    }
-    public bool HasMatches() 
-    {
-        return matches.Count > 0; 
     }
 
     public void DropTiles()
@@ -83,7 +75,6 @@ public class Match3Game : MonoBehaviour
         }
         else
         {
-            // Mevcut DropTiles sistemin (senin zaten yazmýþ olduðun kod)
             DroppedTiles.Clear();
 
             for (int x = 0; x < size.x; x++)
@@ -125,8 +116,8 @@ public class Match3Game : MonoBehaviour
 
                 int2[] directions = new int2[]
                 {
-                new int2(1, 0), // sað
-                new int2(0, 1)  // aþaðý
+                new int2(1, 0),
+                new int2(0, 1) 
                 };
 
                 foreach (int2 dir in directions)
@@ -136,19 +127,17 @@ public class Match3Game : MonoBehaviour
 
                     if (nx < size.x && ny < size.y && grid[nx, ny] == current)
                     {
-                        return true; // Eþleþme bulunabilir
+                        return true;
                     }
                 }
             }
         }
 
-        return false; // Deadlock
+        return false;
     }
     public void ShuffleBoard()
     {
-        Debug.Log("[Smart Shuffle] Akýllý shuffle baþlýyor...");
 
-        // 1. Renkleri say
         Dictionary<TileState, List<int2>> colorPositions = new Dictionary<TileState, List<int2>>();
 
         for (int y = 0; y < size.y; y++)
@@ -165,34 +154,30 @@ public class Match3Game : MonoBehaviour
             }
         }
 
-        // 2. En çok olaný bul
         var mostCommon = colorPositions.OrderByDescending(kvp => kvp.Value.Count).First();
         int halfCount = Mathf.Max(2, mostCommon.Value.Count / 2);
 
-        // 3. Köþe belirle
         if (!shuffleCounter.HasValue) shuffleCounter = 0;
         int corner = shuffleCounter.Value % 4;
         shuffleCounter++;
 
         int2[] corners = {
-        new int2(0, size.y - 1),           // Sol üst
-        new int2(size.x - 1, size.y - 1),  // Sað üst
-        new int2(0, 0),                     // Sol alt
-        new int2(size.x - 1, 0)            // Sað alt
+        new int2(0, size.y - 1),          
+        new int2(size.x - 1, size.y - 1),  
+        new int2(0, 0),                     
+        new int2(size.x - 1, 0)            
     };
 
-        // 4. Tile'larý topla
         List<TileState> tiles = new List<TileState>();
         foreach (var kvp in colorPositions)
         {
             foreach (var poas in kvp.Value)
             {
-                tiles.Add(grid[poas.x, poas.y]);  //  Düzeltildi
-                grid[poas.x, poas.y] = TileState.None;  //  Düzeltildi
+                tiles.Add(grid[poas.x, poas.y]);
+                grid[poas.x, poas.y] = TileState.None; 
             }
         }
 
-        // 5. Grubu yerleþtir
         int2 pos = corners[corner];
         int dir = (corner == 1 || corner == 3) ? -1 : 1;
 
@@ -212,7 +197,6 @@ public class Match3Game : MonoBehaviour
             }
         }
 
-        // 6. Kalanlarý karýþtýr ve yerleþtir
         tiles = tiles.OrderBy(x => Random.value).ToList();
 
         int index = 0;
@@ -224,15 +208,11 @@ public class Match3Game : MonoBehaviour
                     grid[x, y] = tiles[index++];
             }
         }
-
-        Debug.Log($"[Smart Shuffle] {halfCount} adet {mostCommon.Key} gruplanmýþ");
     }
     void DropTilesWithMatchingGuarantee()
     {
         DroppedTiles.Clear();
-        Debug.Log("Garanti calisti");
 
-        // 1. Grid'de hâlâ kalan tile türlerini topla
         HashSet<TileState> existingTypes = new HashSet<TileState>();
         bool gridEmpty = true;
 
@@ -248,30 +228,18 @@ public class Match3Game : MonoBehaviour
             }
         }
 
-        string logText = "[2x2 Drop] Existing Tile Types in Grid: ";
-        foreach (TileState t in existingTypes)
-        {
-            logText += t.ToString() + " ";
-        }
-        Debug.Log(logText);
-
-        // ÇÖZÜM: Sadece 1 kez ayný renk üretmek için flag
         bool matchingTileCreated = false;
 
-        // Boþ grid için garanti renk
         TileState guaranteedColor = TileState.None;
         if (gridEmpty)
         {
             guaranteedColor = (TileState)Random.Range(2, 8);
-            Debug.Log($"[2x2 Boþ Grid] Seçilen garanti renk: {guaranteedColor}");
         }
 
-        // 2. Düþmesi gereken taþlarý sýrayla üret
         for (int x = 0; x < size.x; x++)
         {
             int holeCount = 0;
 
-            // Yükselerek gelen taþlarý kaydýr
             for (int y = 0; y < size.y; y++)
             {
                 if (grid[x, y] == TileState.None)
@@ -286,36 +254,29 @@ public class Match3Game : MonoBehaviour
                 }
             }
 
-            // 3. Yeni taþlarý üstten üret
             for (int h = 1; h <= holeCount; h++)
             {
                 TileState newTile;
 
-                // En son taþ için: garanti eþleþme (ama sadece 1 kez!)
                 if (h == holeCount && !gridEmpty && existingTypes.Count > 0 && !matchingTileCreated)
                 {
                     newTile = GetRandomFromSet(existingTypes);
-                    matchingTileCreated = true; // Flag'i iþaretle
-                    Debug.Log($"[2x2 Eþleþme Garantisi] 1 tile var olan türden seçildi: {newTile}");
+                    matchingTileCreated = true; 
                 }
                 else if (gridEmpty)
                 {
-                    // Üst sýradaki 2 tile ayný renk olsun
                     if ((x == 0 && h == 2) || (x == 1 && h == 2))
                     {
                         newTile = guaranteedColor;
-                        Debug.Log($"[2x2 Boþ Grid] Üst sýra garanti renk: {guaranteedColor}");
                     }
                     else
                     {
                         newTile = (TileState)Random.Range(2, 8);
-                        Debug.Log($"[2x2 Boþ Grid] Rastgele tile: {newTile}");
                     }
                 }
                 else
                 {
                     newTile = (TileState)Random.Range(2, 8);
-                    Debug.Log($"[2x2] Rastgele tile üretildi: {newTile}");
                 }
 
                 grid[x, size.y - h] = newTile;
@@ -327,7 +288,7 @@ public class Match3Game : MonoBehaviour
     }
     TileState GetRandomFromSet(HashSet<TileState> set)
     {
-        int index = Random.Range(0, set.Count); // 0 dahil, Count hariç
+        int index = Random.Range(0, set.Count);
         int i = 0;
 
         foreach (TileState t in set)
@@ -337,7 +298,7 @@ public class Match3Game : MonoBehaviour
             i++;
         }
 
-        return TileState.A; // yedek (asla olmaz)
+        return TileState.A;
     }
    
 }

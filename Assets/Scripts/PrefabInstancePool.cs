@@ -15,7 +15,6 @@ public struct PrefabInstancePool<T> where T : MonoBehaviour
 #if UNITY_EDITOR
         else if (pool.TryPeek(out T i) && !i)
         {
-            // Instances destroyed, assuming due to exiting play mode.
             pool.Clear();
         }
 #endif

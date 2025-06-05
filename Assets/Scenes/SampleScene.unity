@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   size:
-    x: 2
-    y: 2
+    x: 10
+    y: 10
 --- !u!114 &427957034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,11 +484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cafc7f67541e69f4c89394d796fa8158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size:
-    x: 8
-    y: 8
-  tilePrefab: {fileID: 7770641892410025219, guid: ffc726202200fd24e96747e237a6f8b4, type: 3}
-  tileParent: {fileID: 575263495}
   match: {fileID: 427957034}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -4,19 +4,15 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int2 size = new int2(8, 8);
-    [SerializeField] private Tile tilePrefab;
-    [SerializeField] private Transform tileParent;
     [SerializeField] private Match3 match;
-
-    private Grid2D<TileState> grid;
-    private Grid2D<Tile> tiles;
-    private Vector2 offset;
 
     private void Update()
     {
-        
-        if (match.IsPlaying)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            match.StartNewGame();
+        }
+        else
         {
             if (!match.IsBusy)
             {
@@ -24,11 +20,6 @@ public class GameManager : MonoBehaviour
             }
             match.DoWork();
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            match.StartNewGame();
-        }
-  
     }
     private void Awake()
     {
@@ -53,7 +44,7 @@ public class GameManager : MonoBehaviour
                 int x = Mathf.FloorToInt(gridPos.x);
                 int y = Mathf.FloorToInt(gridPos.y);
                 
-                match.TrySelectTile(x, y); // Bu fonksiyon eklenmeli
+                match.TrySelectTile(x, y);
             }
         }
     }

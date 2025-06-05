@@ -1,14 +1,11 @@
 using System.Collections.Generic;
-using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
-
-using static Unity.Mathematics.math;
 
 public class Match3 : MonoBehaviour
 {
     [SerializeField]
-    public Match3Game game;
+    private Match3Game game;
 
     Grid2D<Tile> tiles;
 
@@ -18,9 +15,11 @@ public class Match3 : MonoBehaviour
     Tile[] tilePrefabs;
 
     float busyDuration;
-    public bool IsPlaying => true;
 
-    public bool IsBusy => busyDuration > 0f;
+    public bool IsBusy 
+    {   
+        get { return busyDuration > 0; }    
+    }
 
     void Update()
     {
@@ -57,17 +56,13 @@ public class Match3 : MonoBehaviour
             for (int x = 0; x < tiles.SizeX; x++)
             {
                 tiles[x, y] = SpawnTile(game[x, y], x, y);
-                UpdateGroupIcons(5, 8, 10);
             }
         }
 
-        //  Yeni eklenen kýsým
         if (!game.HasAnyValidMove())
         {
-            Debug.Log("[StartNewGame] No moves found — shuffling...");
             game.ShuffleBoard();
 
-            // Spawn yeniden
             for (int y = 0; y < tiles.SizeY; y++)
             {
                 for (int x = 0; x < tiles.SizeX; x++)
@@ -92,7 +87,6 @@ public class Match3 : MonoBehaviour
         {
             return null;
         }
-        //Debug.Log("tile uretildi");
         return tilePrefabs[index].Spawn(new Vector3(x + tileOffset.x, y + tileOffset.y));
     }
     public void DoWork()
@@ -103,10 +97,8 @@ public class Match3 : MonoBehaviour
             UpdateGroupIcons(5, 8, 10);
             if (!game.HasAnyValidMove())
             {
-                Debug.Log("[DoWork] Deadlock detected — shuffling...");
                 game.ShuffleBoard();
 
-                // Spawn sonrasý:
                 for (int y = 0; y < tiles.SizeY; y++)
                 {
                     for (int x = 0; x < tiles.SizeX; x++)
@@ -114,7 +106,6 @@ public class Match3 : MonoBehaviour
                         tiles[x, y]?.Despawn();
                         tiles[x, y] = SpawnTile(game[x, y], x, y);
 
-                        //  Yeni eklenen shuffle efekti
                         tiles[x, y]?.PlayShuffleEffect();
                     }
                 }
@@ -137,19 +128,17 @@ public class Match3 : MonoBehaviour
 
             if (drop.fromY < tiles.SizeY)
             {
-                // Mevcut tile'ý kayarak düþür
                 tile = tiles[drop.coordinates.x, drop.fromY];
                 busyDuration = Mathf.Max(tile.DropTo(newPosition), busyDuration);
             }
             else
             {
-                // Yeni tile spawn et (üstten geliyormuþ gibi)
                 Vector3 spawnPosition = new Vector3(
                     drop.coordinates.x + tileOffset.x,
-                    tiles.SizeY + tileOffset.y // Ekranýn üstünden baþla
+                    tiles.SizeY + tileOffset.y 
                 );
                 tile = SpawnTile(game[drop.coordinates], spawnPosition.x, spawnPosition.y);
-                tile.SetPositionImmediate(spawnPosition); // Baþlangýç pozisyonunu ayarla
+                tile.SetPositionImmediate(spawnPosition);
                 busyDuration = Mathf.Max(tile.DropTo(newPosition), busyDuration);
             }
 

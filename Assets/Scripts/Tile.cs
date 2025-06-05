@@ -7,12 +7,11 @@ public class Tile : MonoBehaviour
     float disappearDuration = 0.25f;
 
     [SerializeField, Range(0f, 2f)]
-    float dropDuration = 0.3f; // Düþme animasyon süresi
+    float dropDuration = 0.3f;
 
     PrefabInstancePool<Tile> pool;
     float disappearProgress;
 
-    // Animasyon için deðiþkenler
     bool isDropping = false;
     Vector3 startPosition;
     Vector3 targetPosition;
@@ -49,7 +48,6 @@ public class Tile : MonoBehaviour
         return disappearDuration;
     }
 
-    // Yeni fonksiyon: Kayarak düþme animasyonu
     public float DropTo(Vector3 newPosition)
     {
         startPosition = transform.localPosition;
@@ -59,8 +57,6 @@ public class Tile : MonoBehaviour
         enabled = true;
         return dropDuration;
     }
-
-    // Pozisyonu anýnda ayarlama (animasyonsuz)
     public void SetPositionImmediate(Vector3 position)
     {
         transform.localPosition = position;
@@ -69,14 +65,12 @@ public class Tile : MonoBehaviour
 
     void Update()
     {
-        // Kayma animasyonu
         if (isDropping)
         {
             dropProgress += Time.deltaTime;
             float t = dropProgress / dropDuration;
 
-            // Easing fonksiyonu (yumuþak düþme efekti)
-            t = 1f - (1f - t) * (1f - t); // Ease out quad
+            t = 1f - (1f - t) * (1f - t);
 
             transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t);
 
@@ -84,11 +78,10 @@ public class Tile : MonoBehaviour
             {
                 transform.localPosition = targetPosition;
                 isDropping = false;
-                enabled = false; // Update'i durdur
+                enabled = false; 
             }
         }
 
-        // Kaybolma animasyonu
         if (disappearProgress >= 0f)
         {
             disappearProgress += Time.deltaTime;
