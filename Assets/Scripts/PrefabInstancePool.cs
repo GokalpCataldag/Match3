@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Performans optimizasyonu saglamak icin havuz sistemi kullanildi.
+/// </summary>
 public struct PrefabInstancePool<T> where T : MonoBehaviour
 {
     Stack<T> pool;

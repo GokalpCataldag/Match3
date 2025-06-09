@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2799363165089645730
+--- !u!1 &193005379385461490
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3088535180847391533}
-  - component: {fileID: 3972367247352113536}
-  - component: {fileID: 6279739564473676885}
+  - component: {fileID: 8736050706249998740}
+  - component: {fileID: 8875981781248307135}
+  - component: {fileID: 1156514678251553638}
   m_Layer: 0
-  m_Name: Tile2 (1)
+  m_Name: Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3088535180847391533
+--- !u!4 &8736050706249998740
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2799363165089645730}
+  m_GameObject: {fileID: 193005379385461490}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,13 +33,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3972367247352113536
+--- !u!212 &8875981781248307135
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2799363165089645730}
+  m_GameObject: {fileID: 193005379385461490}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -77,24 +77,24 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7985042018138347892, guid: 9e889c657a3a210449de8eeb9a39a047, type: 3}
+  m_Sprite: {fileID: -7364823422338184377, guid: 18f91a4323406604d8b6f05e39334bf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.26, y: 2.56}
+  m_Size: {x: 2.25, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6279739564473676885
+--- !u!114 &1156514678251553638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2799363165089645730}
+  m_GameObject: {fileID: 193005379385461490}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04b43d1bc77ee7f4b982e6eb382cf016, type: 3}
@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disappearDuration: 0.25
   dropDuration: 0.3
-  spriteRenderer: {fileID: 3972367247352113536}
-  defaultIcon: {fileID: 7985042018138347892, guid: 9e889c657a3a210449de8eeb9a39a047, type: 3}
-  iconA: {fileID: 414921610477409366, guid: e6ead45760355194f9c291a0052d98ea, type: 3}
-  iconB: {fileID: -6038182108957047188, guid: fef238af3e439104f87d2c2e691f771a, type: 3}
-  iconC: {fileID: -7586140276444505714, guid: 4069cd06b03516b41afed711c121b7ad, type: 3}
+  spriteRenderer: {fileID: 8875981781248307135}
+  defaultIcon: {fileID: -7364823422338184377, guid: 18f91a4323406604d8b6f05e39334bf9, type: 3}
+  iconA: {fileID: 3291406690555587084, guid: 8f5e08abbe9e248469db2c089ca9f19d, type: 3}
+  iconB: {fileID: -2176861220364285743, guid: ac888507bfd17514e82aae38ce4418b0, type: 3}
+  iconC: {fileID: 6787462199040882907, guid: 58e8f06943d342a4991eff39c90a3dd5, type: 3}

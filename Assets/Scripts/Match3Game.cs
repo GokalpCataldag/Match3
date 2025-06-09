@@ -56,6 +56,9 @@ public class Match3Game : MonoBehaviour
         while (!HasAnyValidMove());
     }
 
+    /// <summary>
+    /// Grid'i tile'larla doldurur.
+    /// </summary>
     void FillGrid()
     {
         for (int y = 0; y < size.y; y++)
@@ -67,8 +70,12 @@ public class Match3Game : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tile'lar patladýktan sonra yeni tile ile doldurur.
+    /// </summary>
     public void DropTiles()
     {
+        // 2x2 - 3x2 - 2x3 gibi kucuk tile'lar icin ayri bir fonksiyon gelistirdim.
         if ((size.x == 2 && size.y <= 3) || (size.x == 3 && size.y == 2))
         {
             DropTilesWithMatchingGuarantee();
@@ -104,6 +111,10 @@ public class Match3Game : MonoBehaviour
             NeedsFilling = false;
         }
     }
+
+    /// <summary>
+    /// Oynanabilir hamle var mi onu kontrol eder.
+    /// </summary>
     public bool HasAnyValidMove()
     {
         for (int y = 0; y < size.y; y++)
@@ -135,6 +146,14 @@ public class Match3Game : MonoBehaviour
 
         return false;
     }
+
+    /// <summary>
+    /// Deadlock durumunda taslari karistirmaya yarar.
+    /// Grid'deki tile'larý renklerine gore gruplar. 
+    /// En cok bulunan tile'ý secer.
+    /// Secilen tile'ýn sayýsýnýn yarisi kadarini her shuffle'da farkli kose olacak sekilde yerlestirir.
+    /// Kalan tile'larý grid'e rastgele dagitir.
+    /// </summary>
     public void ShuffleBoard()
     {
 
@@ -209,6 +228,12 @@ public class Match3Game : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Kucuk grid oldugu icin uretilen tile'larda en az bir eslesme olmasýný saglar.
+    /// Grid'de bulunan tile ile uretilen tile'lardan birinin ayni olmasi saglandi.
+    /// Eger patlamadan sonra grid'de tile yok ise uretilen tile'lardan ikisi ayni olacak sekilde uretilmesi saglandi.
+    /// </summary>
     void DropTilesWithMatchingGuarantee()
     {
         DroppedTiles.Clear();

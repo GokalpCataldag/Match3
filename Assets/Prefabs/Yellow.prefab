@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3088535180847391533}
-  - component: {fileID: 7217025288807911042}
+  - component: {fileID: 3972367247352113536}
   - component: {fileID: 6279739564473676885}
   m_Layer: 0
-  m_Name: Tile2 (5)
+  m_Name: Yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7217025288807911042
+--- !u!212 &3972367247352113536
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,12 +77,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8161472552560778960, guid: 1dc124c110c891f4185a6cd1a35e1cd5, type: 3}
+  m_Sprite: {fileID: 7985042018138347892, guid: 9e889c657a3a210449de8eeb9a39a047, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.25, y: 2.56}
+  m_Size: {x: 2.26, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -102,8 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disappearDuration: 0.25
   dropDuration: 0.3
-  spriteRenderer: {fileID: 7217025288807911042}
-  defaultIcon: {fileID: 8161472552560778960, guid: 1dc124c110c891f4185a6cd1a35e1cd5, type: 3}
-  iconA: {fileID: -6416537123964203564, guid: ebef29d42b9dbc240af3699144e93bd6, type: 3}
-  iconB: {fileID: -2693315669398477313, guid: 77e0183298e84324dbf61065d4c08b8a, type: 3}
-  iconC: {fileID: 1386842339749069192, guid: 202c6518443fe2a46a2743f795d4a709, type: 3}
+  spriteRenderer: {fileID: 3972367247352113536}
+  defaultIcon: {fileID: 7985042018138347892, guid: 9e889c657a3a210449de8eeb9a39a047, type: 3}
+  iconA: {fileID: 414921610477409366, guid: e6ead45760355194f9c291a0052d98ea, type: 3}
+  iconB: {fileID: -6038182108957047188, guid: fef238af3e439104f87d2c2e691f771a, type: 3}
+  iconC: {fileID: -7586140276444505714, guid: 4069cd06b03516b41afed711c121b7ad, type: 3}

@@ -146,6 +146,10 @@ public class Match3 : MonoBehaviour
         }
     }
     public Vector2 TileOffset => tileOffset;
+
+    /// <summary>
+    /// Breadth-First Search (BFS)
+    /// </summary>
     List<int2> FindConnectedGroup(int2 start, TileState target)
     {
         List<int2> group = new List<int2>();

@@ -24,6 +24,10 @@ public class Tile : MonoBehaviour
     public Sprite iconB;
     public Sprite iconC;
 
+    /// <summary>
+    /// Pooldan bir tile alir veya yenisini yaratir.
+    /// Performans icin tile'larý yeniden kullanir.
+    /// </summary>
     public Tile Spawn(Vector3 position)
     {
         Tile instance = pool.GetInstance(this);
@@ -36,6 +40,9 @@ public class Tile : MonoBehaviour
         return instance;
     }
 
+    /// <summary>
+    /// Destroy yerine deaktif eder. Sonra kullanmak uzere saklar.
+    /// </summary>
     public void Despawn()
     {
         pool.Recycle(this);
@@ -93,6 +100,10 @@ public class Tile : MonoBehaviour
             transform.localScale = Vector3.one * (1f - disappearProgress / disappearDuration);
         }
     }
+
+    /// <summary>
+    /// Grup buyuklugune gore iconlarý ayarlar.
+    /// </summary>
     public void SetIconByGroupSize(int groupSize, int a, int b, int c)
     {
         if (groupSize >= c)
